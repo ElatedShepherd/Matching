@@ -4,66 +4,46 @@ using System.Collections.Generic;
 
 public class Spawn : MonoBehaviour
 {
-	public GameObject[] Symbols; //an array to hold all of the prefabs of symbols we want to spawn
-	private bool[] symbolStates = new bool [3];
-	public Transform[] spawnPoints; // this array will hold a reference to all the spawn points in the scene
-	private bool[] spawnPointState = new bool[3];
-    
+    public GameObject[] Symbols; //an array to hold all of the prefabs of symbols we want to spawn
+    public Transform[] spawnPoints; // this array will hold a reference to all the spawn points in the scene
 
-	public float countSpawnTimer;
-	public float spawnTimer = 10;
+    public float countSpawnTimer;
+    public float spawnTimer = 10;
 
-	void Start() {
-		Random.seed = (int)System.DateTime.Now.Ticks;
-		countSpawnTimer = spawnTimer;
-        ClearArrays();
-        Debug.Log(symbolStates[0]);
-	}
+    void Start()
+    {
+        Random.seed = (int)System.DateTime.Now.Ticks;
+        countSpawnTimer = spawnTimer;
+    }
 
-	void Update() {
-		countSpawnTimer -= Time.deltaTime;
+    void Update()
+    {
+        countSpawnTimer -= Time.deltaTime;
 
-		if (countSpawnTimer <= 0){
-			countSpawnTimer = 0;
-			SpawnSymbols ();			
-		}
-	}
+        if (countSpawnTimer <= 0)
+        {
+            countSpawnTimer = 0;
+            SpawnSymbols();
+        }
+    }
 
-	void SpawnSymbols (){
-		int s;
-		int p;
+    void SpawnSymbols()
+    {
+        int p = Random.Range(0, 3);
+        int p2;
+        int p3;
+        do
+            p2 = Random.Range(0, 3);
+        while (p2 == p);
 
-		for (int i=0;i<3;i++){
-            do
-            {
-                s = Random.Range(0, 2);
-                Debug.Log(symbolStates[s]);
-            }
-            while (symbolStates[s]);
-            symbolStates[s] = true;
-            Debug.Log("primer while");
+        do
+            p3 = Random.Range(0, 3);
+        while (p3 == p2 || p3 == p);
 
-            do
-                p = Random.Range(0, 2);
-            while (spawnPointState[p]);
-            spawnPointState[p] = true;
-            Debug.Log("segundo while");
+        GameObject clone = Instantiate(Symbols[0], spawnPoints[p].position, spawnPoints[p].rotation) as GameObject;
+        GameObject clone1 = Instantiate(Symbols[1], spawnPoints[p2].position, spawnPoints[p2].rotation) as GameObject;
+        GameObject clone2 = Instantiate(Symbols[2], spawnPoints[p3].position, spawnPoints[p3].rotation) as GameObject;
 
-
-            GameObject symbol =  Instantiate(Symbols[s], spawnPoints[p].position, spawnPoints[p].rotation) as GameObject;
-		}
-
-		ClearArrays();
-		countSpawnTimer = spawnTimer;
-	}
-
-	void ClearArrays (){
-		symbolStates[0] = false;
-		symbolStates[1] = false;
-		symbolStates[2] = false;
-		spawnPointState[0] = false;
-		spawnPointState[1] = false;
-		spawnPointState[2] = false;
-
-	}
+        countSpawnTimer = spawnTimer;
+    }
 }
