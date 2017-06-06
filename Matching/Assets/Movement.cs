@@ -16,8 +16,10 @@ public class Movement : MonoBehaviour {
 	public float speedIncrement;
 	public float maxSpeed;
 
+    [Header("Manager")]
+    public GameObject GameOverScreen;
 
-	void Start (){
+    void Start (){
 		speed = speedStart;
 		grav = gravStart;
 	}
@@ -33,7 +35,12 @@ public class Movement : MonoBehaviour {
 			AddSpeed ();
 		} else
 			speed = speedStart;
-	}
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Death();
+        }
+    }
 
 	void AddGrav () {
 		grav += gravIncrement;
@@ -52,5 +59,9 @@ public class Movement : MonoBehaviour {
 		grav = gravStart;
 		transform.position = transform.position + new Vector3 (0, speed, 0);
 	}
+    void Death()
+    {
+        GameOverScreen.SetActive(true);
+    }
 
 }
