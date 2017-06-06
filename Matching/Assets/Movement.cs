@@ -63,6 +63,17 @@ public class Movement : MonoBehaviour {
 		transform.position = transform.position + new Vector3 (0, speed, 0);
 	}
 
+    void OnCollisionEnter(Collision col)
+    {
+        if (col.gameObject.tag == "Ground")
+        {
+            if (GameIsOver == false)
+            {
+                GameObject.Find("VisualSphere").SetActive(false);
+            }
+            Death();
+        }
+    }
     void Death()
     {
         GameOverScreen.SetActive(true);  //se activa el panel de gameOver
