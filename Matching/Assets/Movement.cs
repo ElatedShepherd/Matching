@@ -18,10 +18,13 @@ public class Movement : MonoBehaviour {
 
     [Header("Manager")]
     public GameObject GameOverScreen;
+    public bool GameIsOver;
 
     void Start (){
 		speed = speedStart;
 		grav = gravStart;
+        GameIsOver = false;
+        Debug.Log("Scene Start");
 	}
 	// Update is called once per frame
 	void FixedUpdate () {
@@ -59,9 +62,11 @@ public class Movement : MonoBehaviour {
 		grav = gravStart;
 		transform.position = transform.position + new Vector3 (0, speed, 0);
 	}
+
     void Death()
     {
-        GameOverScreen.SetActive(true);
+        GameOverScreen.SetActive(true);  //se activa el panel de gameOver
+        GameIsOver = true;
     }
 
 }
